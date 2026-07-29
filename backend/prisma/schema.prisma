@@ -1,0 +1,92 @@
+// This is the initial Soundlack Prisma schema.
+// Review before running the first migration against a real database.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SongFormat {
+  MP3
+  FLAC
+}
+
+model AdminUser {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Artist {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  albums    Album[]
+  songs     Song[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Album {
+  id          String   @id @default(uuid())
+  title       String
+  artistId    String
+  coverKey    String?
+  releaseYear Int?
+  artist      Artist   @relation(fields: [artistId], references: [id], onDelete: Restrict)
+  songs       Song[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([artistId])
+  @@index([title])
+}
+
+model Song {
+  id              String         @id @default(uuid())
+  title           String
+  artistId        String
+  albumId         String?
+  durationSeconds Int?
+  format          SongFormat
+  audioKey        String
+  fileSizeBytes   BigInt
+  coverKey        String?
+  trackNumber     Int?
+  discNumber      Int?
+  artist          Artist         @relation(fields: [artistId], references: [id], onDelete: Restrict)
+  album           Album?         @relation(fields: [albumId], references: [id], onDelete: SetNull)
+  playlistSongs   PlaylistSong[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([artistId])
+  @@index([albumId])
+  @@index([createdAt])
+  @@index([title])
+}
+
+model Playlist {
+  id        String         @id @default(uuid())
+  name      String
+  songs     PlaylistSong[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model PlaylistSong {
+  playlistId String
+  songId     String
+  order      Int
+  addedAt    DateTime @default(now())
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  song       Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+
+  @@id([playlistId, songId])
+  @@index([songId])
+  @@index([playlistId, order])
+}

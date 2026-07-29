@@ -1,0 +1,18 @@
+node_modules
+# Keep environment variables out of version control
+.env
+
+/generated/prisma
+
+# Build and coverage output
+dist/
+coverage/
+
+# Local tool/agent generated files
+.agents/
+.claude/
+.windsurf/
+skills-lock.json
+
+# Project planning docs kept local
+*.md
