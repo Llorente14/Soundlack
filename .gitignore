@@ -3,6 +3,8 @@ node_modules/
 dist/
 coverage/
 generated/
+/storage/
+/backend/storage/
 
 # Environment and secrets
 .env
