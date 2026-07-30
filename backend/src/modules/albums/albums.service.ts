@@ -48,7 +48,9 @@ export class AlbumsService {
   }
 
   async create(dto: CreateAlbumDto) {
-    const artist = await this.prisma.artist.findUnique({ where: { id: dto.artistId } });
+    const artist = await this.prisma.artist.findUnique({
+      where: { id: dto.artistId },
+    });
 
     if (!artist) {
       throw new NotFoundException('Artist not found');
