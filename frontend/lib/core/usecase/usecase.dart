@@ -8,3 +8,9 @@ abstract class UseCase<Result, Params> {
 class NoParams {
   const NoParams();
 }
+
+class CreateArtistParams {
+  final String name;
+
+  CreateArtistParams({required this.name});
+}
