@@ -34,7 +34,7 @@ class ArtistRemoteDatasourceImpl implements ArtistRemoteDataSource {
     CreateArtistRequestModel params,
   ) async {
     try {
-      final response = await dio.post('/artist', data: params.toJson());
+      final response = await dio.post('/admin/artist', data: params.toJson());
       final dataJson = response.data['body'];
       return ArtistResponseModel.fromJson(dataJson);
     } on DioException catch (e) {
