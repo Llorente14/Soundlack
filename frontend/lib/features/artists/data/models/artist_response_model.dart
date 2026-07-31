@@ -1,4 +1,4 @@
-import 'package:frontend/features/artist/domain/entities/artist.dart';
+import 'package:frontend/features/artists/domain/entities/artist.dart';
 
 class ArtistResponseModel {
   final int id;

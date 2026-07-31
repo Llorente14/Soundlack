@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:frontend/core/error/exception.dart';
-import 'package:frontend/features/artist/data/datasources/artist_remote_datasource.dart';
-import 'package:frontend/features/artist/data/models/artist_response_model.dart';
-import 'package:frontend/features/artist/data/models/create_artist_request_model.dart';
+import 'package:frontend/features/artists/data/datasources/artist_remote_datasource.dart';
+import 'package:frontend/features/artists/data/models/artist_response_model.dart';
+import 'package:frontend/features/artists/data/models/create_artist_request_model.dart';
 
 class ArtistRemoteDatasourceImpl implements ArtistRemoteDataSource {
   final Dio dio;
