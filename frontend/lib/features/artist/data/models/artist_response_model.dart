@@ -1,3 +1,5 @@
+import 'package:frontend/features/artist/domain/entities/artist.dart';
+
 class ArtistResponseModel {
   final int id;
   final String name;
@@ -29,5 +31,16 @@ class ArtistResponseModel {
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
     };
+  }
+}
+
+extension ArtistModelMapper on ArtistResponseModel {
+  Artist toEntity() {
+    return Artist(
+      id: id,
+      name: name,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
   }
 }

@@ -1,0 +1,24 @@
+import 'package:dartz/dartz.dart';
+import 'package:frontend/core/error/exception.dart';
+import 'package:frontend/core/error/failure.dart';
+import 'package:frontend/features/artist/data/datasources/artist_remote_datasource.dart';
+import 'package:frontend/features/artist/data/models/artist_response_model.dart';
+import 'package:frontend/features/artist/domain/entities/artist.dart';
+import 'package:frontend/features/artist/domain/repositories/artist_repository.dart';
+
+class ArtistRepositoryImpl implements ArtistRepository {
+  final ArtistRemoteDataSource artistRemoteDataSource;
+
+  ArtistRepositoryImpl({required this.artistRemoteDataSource});
+  @override
+  Future<Either<Failure, List<Artist>>> getArtist() async {
+    try {
+      final model = await artistRemoteDataSource.getArtist();
+      return Right(model.map((artist) => artist.toEntity()).toList());
+    } on ServerException {
+      return Left(ServerFailure());
+    } on NetworkException {
+      return Left(NetworkFailure());
+    }
+  }
+}
